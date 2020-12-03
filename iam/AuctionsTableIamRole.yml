@@ -4,5 +4,12 @@ AuctionsTableIam:
     - dynamodb:PutItem
     - dynamodb:Scan
     - dynamodb:GetItem
+    - dynamodb:UpdateItem
+    - dynamodb:Query
   Resource:
     - ${self:custom.AuctionsTable.arn}
+    - !Join [
+        "/",
+        ["${self:custom.AuctionsTable.arn}", "index", "statusAndEndDate"],
+      ]
+      # this produces arn which is == <table's arn>/index/statusAndEndDate

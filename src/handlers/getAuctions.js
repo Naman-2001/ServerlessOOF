@@ -1,24 +1,31 @@
-import { v4 as uuid } from "uuid";
 import AWS from "aws-sdk";
-import middy from "@middy/core";
-import httpJsonBodyParser from "@middy/http-json-body-parser";
-import httpEventNormalizer from "@middy/http-event-normalizer";
-import httpErrorHandler from "@middy/http-error-handler";
+import commonMiddleware from "../lib/commonMiddleware";
 import createError from "http-errors";
+import validator from "@middy/validator";
+import getAuctionsSchema from "../lib/schemas/getAuctionsSchema";
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
 async function getAuctions(event, context) {
+  const { status } = event.queryStringParameters;
   let auctions;
 
-  try {
-    const result = await dynamodb
-      .scan({
-        TableName: process.env.AUCTIONS_TABLE_NAME,
-      })
-      .promise();
+  const params = {
+    TableName: process.env.AUCTIONS_TABLE_NAME,
+    IndexName: "statusAndEndDate",
+    KeyConditionExpression: "#status= :status",
+    ExpressionAttributeValues: {
+      ":status": status,
+    },
+    ExpressionAttributeNames: {
+      "#status": "status",
+    },
+  };
 
-    auction = result.Items;
+  try {
+    const result = await dynamodb.query(params).promise();
+
+    auctions = result.Items;
   } catch (error) {
     console.error(error);
     throw new createError.InternalServerError(error);
@@ -30,8 +37,6 @@ async function getAuctions(event, context) {
   };
 }
 
-export const handler = middy(getAuctions).use([
-  httpJsonBodyParser(),
-  httpEventNormalizer(),
-  httpErrorHandler(),
-]);
+export const handler = commonMiddleware(getAuctions).use(
+  validator({ inputSchema: getAuctionsSchema, useDefaults: true })
+);
