@@ -1,0 +1,23 @@
+curl --location --request POST 'https://serverless-sample.us.auth0.com/oauth/token' 
+--header 'Content-Type: application/x-www-form-urlencoded' 
+--data-urlencode 'client_id=O7zozwRWQXQO2IQ31Y0k8OELmQPaqSiA' 
+--data-urlencode 'username=naman.aggarwal2001@gmail.com' 
+--data-urlencode 'password=Naman075' 
+--data-urlencode 'grant_type=password' 
+--data-urlencode 'scope=openi
+
+curl --location --request POST 'https://serverless-sample.us.auth0.com/oauth/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=O7zozwRWQXQO2IQ31Y0k8OELmQPaqSiA' \
+--data-urlencode 'username=naman.aggarwal2001@gmail.com' \
+--data-urlencode 'password=Naman075' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'scope=openid'
+
+curl --location --request POST '<your service domain name>/oauth/token' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=<your client id>' \
+--data-urlencode 'username=<your username>' \
+--data-urlencode 'password=<your password>' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'scope=openid'
