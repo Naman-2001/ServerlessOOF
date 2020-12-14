@@ -22,3 +22,12 @@ curl --location --request POST 'https://serverless-sample.us.auth0.com/oauth/tok
 --data-urlencode 'password=Naman075' \
 --data-urlencode 'grant_type=password' \
 --data-urlencode 'scope=openid'
+
+
+curl --request POST \
+  --url 'https://serverless-sample.us.auth0.com/oauth/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data 'client_id=NdOOr75nuVpbzH3mBohSK0fLrrL6iOBv' \
+  --data client_secret=lkDiyXNcGo8E36VdiSxj38Bfb7QRxiF_P2S4X_QwBh6AGnb3c56odplI7WEGAhBp \
+  --data 'audience=https://serverless-sample.us.auth0.com/api/v2/'
