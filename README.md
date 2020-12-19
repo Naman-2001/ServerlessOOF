@@ -1,4 +1,4 @@
-
+## My first try on going serveless with AWS lambda functions along with dynamodb and other microservices.
 
 ## Packages included for AWS support
 * Folder structure used consistently across our projects.
